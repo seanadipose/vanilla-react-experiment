@@ -32,6 +32,7 @@ class Details extends Component {
     );
 
     const json = await res.json();
+
     this.setState(Object.assign({ loading: false }, json.pets[0]));
   }
 }
