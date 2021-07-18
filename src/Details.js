@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 
 import { withRouter } from 'react-router-dom';
-
+import Carousel from './Carousel';
 // const Details = () => {
 //   const { id } = useParams();
 //   return <h2>{id}</h2>;
 // };
 
 class Details extends Component {
+  state = { loading: true, name: '', animal: '', breed: '' };
+
   constructor() {
     super();
-    this.state = { loading: true };
   }
   render() {
     if (this.state.loading) return <h2>Loading...</h2>;
-    const { animal, breed, city, state, description, name } = this.state;
+    const { animal, breed, city, state, description, name, images } =
+      this.state;
     return (
       <div className="details">
+        <Carousel images={images}></Carousel>
         <div>
           <h1>{name}</h1>
           <h2>{`${animal} - ${breed} - ${city}, ${state}`}</h2>
