@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-
 import { withRouter } from 'react-router-dom';
+
 import Carousel from './Carousel';
-// const Details = () => {
-//   const { id } = useParams();
-//   return <h2>{id}</h2>;
-// };
+import ErrorBoundary from './ErrorBoundary';
 
 class Details extends Component {
-  state = { loading: true, name: '', animal: '', breed: '' };
+  state = { loading: true };
 
   constructor() {
     super();
@@ -38,4 +35,13 @@ class Details extends Component {
     this.setState(Object.assign({ loading: false }, json.pets[0]));
   }
 }
-export default withRouter(Details);
+
+const DetailsWithRouter = withRouter(Details);
+
+export default function DetailsErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <DetailsWithRouter {...props} />
+    </ErrorBoundary>
+  );
+}

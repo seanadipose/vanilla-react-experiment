@@ -6,7 +6,7 @@ const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
 const SearchParams = () => {
   /* The order of the hooks is really important. It will get applied to the order the variables are declared
    */
-  const [location, setLocation] = useState('Seattle, WA');
+  const [location, setLocation] = useState('');
   const [animal, setAnimal] = useState('');
   const [breed, setBreed] = useState('');
   const [pets, setPets] = useState([]);
@@ -16,7 +16,7 @@ const SearchParams = () => {
   useEffect(() => {
     requestPets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [animal]);
+  }, [location]);
 
   async function requestPets() {
     const res = await fetch(
