@@ -1,15 +1,33 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { Pet } from './pet';
+import useBreedList from './UseBreedList';
 const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
 
 const SearchParams = () => {
   /* The order of the hooks is really important. It will get applied to the order the variables are declared
    */
   const [location, setLocation] = useState('Seattle, WA');
-  const [animal, setAnimal] = useState('dog');
+  const [animal, setAnimal] = useState('');
   const [breed, setBreed] = useState('');
-  const breeds = [];
+  const [pets, setPets] = useState([]);
+  const [breeds] = useBreedList(animal);
 
+  /* Add an empty array as the second prop to prevent it from making multi requests, that property sets when it renders */
+  useEffect(() => {
+    requestPets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [animal]);
+
+  async function requestPets() {
+    const res = await fetch(
+      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+    );
+    const json = await res.json();
+
+    console.log(json);
+
+    setPets(json.pets);
+  }
   /* target.value is the result of the event */
   const updateLocation = function (e) {
     setLocation(e.target.value);
@@ -59,6 +77,14 @@ const SearchParams = () => {
         </select>
         <button>Submit</button>
       </form>
+      {pets.map((pet) => (
+        <Pet
+          name={pet.name}
+          animal={pet.animal}
+          breed={pet.breed}
+          key={pet.id}
+        />
+      ))}
     </div>
   );
 };
