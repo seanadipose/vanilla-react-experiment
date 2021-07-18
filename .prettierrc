@@ -1,5 +1,6 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "semicolon": true
+  "semicolon": true,
+  "singleQuote": true
 }
